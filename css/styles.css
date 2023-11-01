@@ -1,3 +1,14 @@
 .hidden {
     display: none;
 }
+
+.player {
+    margin: 50px;
+    border: 2px solid rgb(16, 15, 16);
+    padding: 1px;
+    background-color: rgb(253, 229, 233);
+}
+
+body {
+    background-color: pink;
+}

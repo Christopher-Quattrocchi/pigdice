@@ -4,43 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
     <script src="js/scripts.js"></script>
     <link rel="stylesheet" href="css/styles.css">
     <title>Pig Dice</title>
 </head>
 
 <body>
+  <h1>PIG'S DICE</h1>
+  <p>Roll the dice. First player to 100 wins all the bacon!</p>
 
+    <div id="hideme">
+        <form id="create-player">
+            <p>Enter your name:</p>
+            <input type="text" name="name" id="name">
+            <button type="submit">Create Player</button>
+        </form>
 
-    <form id="create-player">
-        <p>Enter your name:</p>
-        <input type="text" name="name" id="name">
-        <button type="submit">Create Player</button>
-    </form>
-
-    <form id="pig-dice">
-        <select name="rollOrHold" id="rollOrHold">
-            <option value="roll">Roll</option>
-            <option value="hold">Hold</option>
-        </select>
-        <button type="submit">Submit</button>
-    </form>
-    <p id="p1"></p>
-    <p id="p2"></p>
-    <p id="turn"></p>
-    <div id="output-p1">
-        <p>Player One:</p>
-        <p id="round-score-p1"></p>
-        <p id="total-score-p1"></p>
-        <p id="victory-p1"></p>
+      
+        <form id="pig-dice" class="hidden">
+            <!-- <select name="rollOrHold" id="rollOrHold"> -->
+                <!-- <option value="roll">Roll</option>
+                <option value="hold">Hold</option>
+            </select>
+            <button type="submit">Submit</button> -->
+            <button value="roll" id="rollbutton" type="click" >Roll!</button>
+            <button value="hold" id="holdbutton" type="click">Hold</button>
+        </form>
+     
+        <p id="p1"></p>
+        <p id="p2"></p>
+        <p id="turn"></p>
+        <h2 id="roll"></h2>
+        <div id="output-p1" class="player">
+            <p>Player One:</p>
+            <p id="round-score-p1"></p>
+            <p id="total-score-p1"></p>
+            <p id="victory-p1"></p>
+        </div>
+        <div id="output-p2" class="player">
+            <p>Player Two:</p>
+            <p id="round-score-p2"></p>
+            <p id="total-score-p2"></p>
+            <p id="victory-p2"></p>
+        </div>
     </div>
-    <div id="output-p2">
-        <p>Player Two:</p>
-        <p id="round-score-p2"></p>
-        <p id="total-score-p2"></p>
-        <p id="victory-p2"></p>
-    </div>
-    
+
+    <h1 id="victory"></h1>
+
 
 </body>
 
