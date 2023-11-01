@@ -1,6 +1,6 @@
-
+SUCCESS
 Test 1: "It should roll the dice and give a random output"
-Code: rollDice()
+Code: diceRoll()
 Expected Output: 1-6
 
 Test 2: "It will add a player with an initial score of "0""
