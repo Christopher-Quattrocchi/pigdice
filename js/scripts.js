@@ -12,6 +12,7 @@ function Player(name) {
     this.playerVictory = false;
 }
 
+// computerPlayer = new Player(Skynet);
 
 //get random number 1-6, add to roundscore if not 1
 Player.prototype.diceRoll = function () {
@@ -38,6 +39,13 @@ function changePlayer() {
     playerOne.playerTurn = !playerOne.playerTurn;
     playerTwo.playerTurn = !playerTwo.playerTurn;
     displayTurn();
+}
+
+function computerOpponent() {
+    while (roundScore <= 20) {
+        computerPlayer.diceRoll()
+    }
+    computerPlayer.updateScore();
 }
 
 // UI Logic
@@ -98,7 +106,6 @@ function handleSubmission(e) {
 
 
     if (playerOne.playerTurn === true) {
-        // pTurn.innerText = "It is " + playerOne.name + "'s turn";
         if (e.target === rollbutton) {
             playerOne.diceRoll();
             console.log(playerOne.name, " clicked roll. Your total score is: ", playerOne.totalScore, "and your round score is: ", playerOne.roundScore);
@@ -117,7 +124,6 @@ function handleSubmission(e) {
             }
         }
     } else if (playerTwo.playerTurn === true) {
-        // pTurn.innerText = "It is " + playerTwo.name + "'s turn";
         if (e.target === rollbutton) {
             playerTwo.diceRoll();
             console.log(playerTwo.name, " clicked roll. Your total score is: ", playerTwo.totalScore, "and your round score is: ", playerTwo.roundScore);

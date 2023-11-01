@@ -13,6 +13,7 @@
 <body>
   <h1>PIG'S DICE</h1>
   <p>Roll the dice. First player to 100 wins all the bacon!</p>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Pass_the_pigs_dice.jpg/250px-Pass_the_pigs_dice.jpg" alt="pig's dice">
 
     <div id="hideme">
         <form id="create-player">
@@ -21,13 +22,10 @@
             <button type="submit">Create Player</button>
         </form>
 
+        <button type="click" class="hidden" id="computer-player">Play against computer</button>
+
       
         <form id="pig-dice" class="hidden">
-            <!-- <select name="rollOrHold" id="rollOrHold"> -->
-                <!-- <option value="roll">Roll</option>
-                <option value="hold">Hold</option>
-            </select>
-            <button type="submit">Submit</button> -->
             <button value="roll" id="rollbutton" type="click" >Roll!</button>
             <button value="hold" id="holdbutton" type="click">Hold</button>
         </form>

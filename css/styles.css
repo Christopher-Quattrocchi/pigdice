@@ -9,6 +9,11 @@
     background-color: rgb(253, 229, 233);
 }
 
+p {
+    font-size: x-large;
+}
+
 body {
     background-color: pink;
+    text-align: center;
 }
