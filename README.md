@@ -3,6 +3,7 @@ Test 1: "It should roll the dice and give a random output"
 Code: diceRoll()
 Expected Output: 1-6
 
+SUCCESS
 Test 2: "It will add a player with an initial score of "0""
 Code: playerOne = new player ("Frank")
 Expected Output: Player: Name: Frank; Score: 0

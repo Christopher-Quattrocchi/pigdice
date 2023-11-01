@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,24 @@
     <link rel="stylesheet" href="css/styles.css">
     <title>Pig Dice</title>
 </head>
+
 <body>
-    
+    <form id="pig-dice">
+        <p>Enter your name:</p>
+        <input type="text" id="name">
+        <select name="rollOrHold" id="rollOrHold">
+            <option value="roll">Roll</option>
+            <option value="hold">Hold</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="output">
+        <p id="total-score"></p>
+        <p id="round-score"></p>
+        <p id="victory"></p>
+    </div>
+
 </body>
+
 </html>
