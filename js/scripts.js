@@ -20,9 +20,11 @@ Player.prototype.diceRoll = function () {
         if (playerOne.playerTurn) {
             playerOne.playerTurn = false;
             playerTwo.playerTurn = true;
+            displayTurn();
         } else if (playerTwo.playerTurn) {
             playerOne.playerTurn = true;
             playerTwo.playerTurn = false;
+            displayTurn();
         }
     } else {
         this.roundScore += roll;
@@ -36,9 +38,11 @@ Player.prototype.updateScore = function (roundScore) {
     if (playerOne.playerTurn) {
         playerOne.playerTurn = false;
         playerTwo.playerTurn = true;
+        displayTurn();
     } else if (playerTwo.playerTurn) {
         playerOne.playerTurn = true;
         playerTwo.playerTurn = false;
+        displayTurn();
     }
 }
 
@@ -119,7 +123,7 @@ function handleSubmission(e) {
 
     const pTurn = document.getElementById("turn");
     if (playerOne.playerTurn === true) {
-        pTurn.innerText = "It is " + playerOne.name + "'s turn";
+        // pTurn.innerText = "It is " + playerOne.name + "'s turn";
         if (holdOrRoll === "roll") {
             playerOne.diceRoll();
             console.log(playerOne.name, " clicked roll. Your total score is: ", playerOne.totalScore, "and your round score is: ", playerOne.roundScore);
@@ -132,7 +136,7 @@ function handleSubmission(e) {
             pTotal1.innerText = "Total Score: " + playerOne.totalScore;
         }
     } else if (playerTwo.playerTurn === true) {
-        pTurn.innerText = "It is " + playerTwo.name + "'s turn";
+        // pTurn.innerText = "It is " + playerTwo.name + "'s turn";
         if (holdOrRoll === "roll") {
             playerTwo.diceRoll();
             console.log(playerTwo.name, " clicked roll. Your total score is: ", playerTwo.totalScore, "and your round score is: ", playerTwo.roundScore);
@@ -144,6 +148,15 @@ function handleSubmission(e) {
             pRound2.innerText = "Round Score: " + playerTwo.roundScore;
             pTotal2.innerText = "Total Score: " + playerTwo.totalScore;
         }
+    }
+}
+
+function displayTurn() {
+    const pTurn = document.getElementById("turn");
+    if (playerOne.playerTurn) {
+        pTurn.innerText = "It is " + playerOne.name + "'s turn.";
+    } else if (playerTwo.playerTurn) {
+        pTurn.innerText = "It is " + playerTwo.name + "'s turn.";
     }
 }
 
