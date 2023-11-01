@@ -12,8 +12,6 @@ function Player(name) {
     this.playerVictory = false;
 }
 
-// computerPlayer = new Player(Skynet);
-
 //get random number 1-6, add to roundscore if not 1
 Player.prototype.diceRoll = function () {
     displayRoll = document.getElementById("roll")
@@ -75,11 +73,15 @@ function createPlayer(e) {
     if (!playerOne) {
         playerOne = new Player(name);
         playerOne.playerTurn = true;
+        document.getElementById("computer-player").setAttribute("class", "hideme");
+        document.getElementById("create-button").innerText = "Create Player 2";
         p1.innerText = "Player one: " + name;
     } else if (!playerTwo) {
         playerTwo = new Player(name);
         p2.innerText = "Player two: " + name;
         hideForm.setAttribute("class", "hidden");
+        document.getElementById("computer-player").setAttribute("class", "hidden");
+
     } else {
 
         console.log("Stop breaking stuff");
