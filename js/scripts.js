@@ -54,12 +54,17 @@ window.addEventListener("load", function () {
     const rollbutton = document.getElementById("rollbutton");
     document.getElementById("create-player").addEventListener("submit", createPlayer);
     document.getElementById("pig-dice").addEventListener("click", handleSubmission);
+    document.getElementById("computer-player").addEventListener("submit", computerPlayer);
   
 })
 
 let playerOne; //Defining a player, setting to null
 let playerTwo;
 // playerOne.playerTurn = true;
+
+function computerPlayer(e) {
+    computerPlayer = new Player(Skynet);
+}
 
 function createPlayer(e) {
     e.preventDefault();
