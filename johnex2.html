@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <script src="js/johnex2.js"></script>
+    <title>Pig Dice</title>
+</head>
+
+<body>
+  <h1>PIG'S DICE</h1>
+  <p>Roll the dice. First player to 100 wins all the bacon!</p>
+  <p>Roll a ONE and your round score goes to ZERO. Roll a double ONE and your TOTAL score goes to ZERO. Good Luck!</p>
+  <p>May to roll's be ever in your favor.</p>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Pass_the_pigs_dice.jpg/250px-Pass_the_pigs_dice.jpg" alt="pig's dice">
+
+    <form id="create-player">
+        <p>Enter your name:</p>
+        <input type="text" name="name" id="name">
+        <button type="submit" id="create-button">Create Player</button>
+    </form>
+
+    <button type="button" id="computer-player">Play against computer</button>
+
+    <form id="pig-dice" class="hidden">
+        <button value="roll" id="rollbutton" type="button" >Roll!</button>
+        <button value="hold" id="holdbutton" type="button">Hold</button>
+    </form>
+
+  <p id="turn" class="hidden">
+    It is currently <span id="current-player-name"></span>'s turn
+  </p>
+
+  <div id="player-info">
+    </div>
+
+    <h2 id="roll1"></h2>
+    <h2 id="roll2"></h2>
+    <h2 id="match"></h2>
+    <h2 id="wipeout"></h2>
+
+    <h1 id="victory"></h1>
+
+
+</body>
+
+</html>

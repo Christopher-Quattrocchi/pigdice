@@ -94,6 +94,7 @@ function delay(ms) {
 async function computerStrategy() {
     if (!computerOpponent.playerTurn) return;
     console.log("In computerStrategy");
+    
     const pTotal1 = document.getElementById("total-score-p1");
     const pTotal2 = document.getElementById("total-score-p2");
     const pRound1 = document.getElementById("round-score-p1");
@@ -250,8 +251,8 @@ Player.prototype.victoryCheck = function () {
 const rollObservers = [];
 
 rollObservers.push(function(roll1, roll2) {
-    displayRoll1.innerText = "You rolled a: " + roll1;
-    displayRoll2.innerText = "You rolled a: " + roll2;
+    displayRoll1.innerText = this.name + " rolled a: " + roll1;
+    displayRoll2.innerText = this.name + " rolled a: " + roll2;
 });
 
 function getDiceRoll() {
