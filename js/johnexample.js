@@ -250,8 +250,8 @@ Player.prototype.victoryCheck = function () {
 const rollObservers = [];
 
 rollObservers.push(function(roll1, roll2) {
-    displayRoll1.innerText = "You rolled a: " + roll1;
-    displayRoll2.innerText = "You rolled a: " + roll2;
+    displayRoll1.innerText = this.name + " rolled a: " + roll1;
+    displayRoll2.innerText = this.name + " rolled a: " + roll2;
 });
 
 function getDiceRoll() {
