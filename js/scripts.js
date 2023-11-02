@@ -90,6 +90,8 @@ let computerOpponent;
 
 function startWithComputer(e) {
     e.preventDefault();
+    document.getElementById("create-player").setAttribute("class", "hidden");
+    document.getElementById("computer-player").setAttribute("class", "hidden");
     computerOpponent = new Player("Skynet");
     displayTurn();
     if (computerOpponent.playerTurn) {
