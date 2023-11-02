@@ -37,7 +37,7 @@ function changePlayer() {
     }
     if (computerOpponent) {
         computerOpponent.playerTurn = !computerOpponent.playerTurn;
-    }   computerStrategy();
+    } computerStrategy();
     displayTurn();
 }
 
@@ -49,33 +49,37 @@ function computerStrategy() {
     const hideMe = document.getElementById("hideme");
     p2.innerText = "Player Two: " + computerOpponent.name;
 
-    const interval = setInterval(() => {
-        if (computerOpponent.playerTurn) {
-            if (computerOpponent.roundScore > 12 || !computerOpponent.playerTurn) {
+    function computerStrategy() {
+        if (!computerOpponent.playerTurn) return;
+
+        const pTotal2 = document.getElementById("total-score-p2");
+        const pRound2 = document.getElementById("round-score-p2");
+        const victory = document.getElementById("victory");
+        const hideMe = document.getElementById("hideme");
+
+        const interval = setInterval(() => {
+            if (!computerOpponent.playerTurn) {
                 clearInterval(interval);
-                if (computerOpponent.playerTurn) {
-                    computerOpponent.updateScore();
-                    computerOpponent.victoryCheck();
-                    if (computerOpponent.playerVictory) {
-                        victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
-                        hideMe.setAttribute("class", "hidden");
-                    }
-                }
-            } else {
-                computerOpponent.diceRoll();
-                computerOpponent.victoryCheck();
-                if (computerOpponent.playerVictory) {
-                    clearInterval(interval);
-                    victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
-                    hideMe.setAttribute("class", "hidden");
-                }
+                return;
             }
+
+            computerOpponent.diceRoll();
             pRound2.innerText = "Round Score: " + computerOpponent.roundScore;
             pTotal2.innerText = "Total Score: " + computerOpponent.totalScore;
-        }
-    }, 1000);
-}
 
+            if (computerOpponent.roundScore > 12 || computerOpponent.totalScore >= 100) {
+                clearInterval(interval);
+                computerOpponent.updateScore();
+                if (computerOpponent.totalScore >= 100) {
+                    victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
+                    hideMe.setAttribute("class", "hidden");
+                } else {
+                    changePlayer();
+                }
+            }
+        }, 1000);
+    }
+}
 
 // UI Logic
 
@@ -98,7 +102,7 @@ function startWithComputer(e) {
     const p2 = document.getElementById("p2");
     displayTurn();
     p2.innerText = "Player Two: " + computerOpponent.name;
-    
+
 }
 
 function createPlayer(e) {
