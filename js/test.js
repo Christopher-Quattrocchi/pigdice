@@ -26,6 +26,8 @@ Player.prototype.diceRoll = async function () {
     displayRoll1.innerText = this.name + " rolled a: " + roll1;
     displayRoll2.innerText = this.name + " rolled a: " + roll2;
 
+    showDice(roll1, roll2);
+
     if (roll1 === 1 && roll2 === 1) {//check for total wipeout
         this.roundScore = 0;
         this.totalScore = 0;
@@ -54,6 +56,16 @@ Player.prototype.diceRoll = async function () {
         this.roundScore += roll1 + roll2;
         updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
     }
+}
+
+function showDice(roll1, roll2) {
+    imgHolder = document.getElementById("img-holder");
+    img1 = document.getElementById("img1");
+    img2 = document.getElementById("img2");
+
+    imgHolder.setAttribute("class", "hideme");
+    img1.setAttribute("src", "dice/" + roll1 + ".png");
+    img2.setAttribute("src", "dice/" + roll2 + ".png");
 }
 
 function updateDisplay(player, pTotal1, pRound1, pTotal2, pRound2) {//make sure that the current score is shown
