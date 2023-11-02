@@ -1,8 +1,5 @@
 // Business Logic
 
-// let totalScore = 0;//made global
-// let roundScore = 0;
-
 //Create player object
 function Player(name) {
     this.name = name;
@@ -21,7 +18,7 @@ Player.prototype.diceRoll = function () {
         this.roundScore = 0;
         changePlayer();
     } else {
-        displayRoll.innerText  = "You rolled a: " + roll;
+        displayRoll.innerText = "You rolled a: " + roll;
         this.roundScore += roll;
     }
 }
@@ -35,35 +32,69 @@ Player.prototype.updateScore = function (roundScore) {
 
 function changePlayer() {
     playerOne.playerTurn = !playerOne.playerTurn;
-    playerTwo.playerTurn = !playerTwo.playerTurn;
+    if (playerTwo) {
+        playerTwo.playerTurn = !playerTwo.playerTurn;
+    }
+    if (computerOpponent) {
+        computerOpponent.playerTurn = !computerOpponent.playerTurn;
+    }
     displayTurn();
 }
 
-function computerOpponent() {
-    while (roundScore <= 20) {
-        computerPlayer.diceRoll()
-    }
-    computerPlayer.updateScore();
+function computerStrategy() {
+    const p2 = document.getElementById("p2");
+    const pTotal2 = document.getElementById("total-score-p2");
+    const pRound2 = document.getElementById("round-score-p2");
+    p2.innerText = "Player Two: " + computerOpponent.name;
+
+    const interval = setInterval(() => {
+        // Check if it's the computer's turn
+        if (computerOpponent.playerTurn) {
+            if (computerOpponent.roundScore > 20 || !computerOpponent.playerTurn) {
+                clearInterval(interval);
+                if (computerOpponent.playerTurn) {
+                    computerOpponent.updateScore();
+                    pRound2.innerText = "Round Score: " + computerOpponent.roundScore;
+                    pTotal2.innerText = "Total Score: " + computerOpponent.totalScore;
+                    
+                }
+            } else {
+                computerOpponent.diceRoll();
+                pRound2.innerText = "Round Score: " + computerOpponent.roundScore;
+                pTotal2.innerText = "Total Score: " + computerOpponent.totalScore;
+                computerOpponent.victoryCheck()
+                if (computerOpponent.playerVictory) {
+                    victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
+                    hideMe.setAttribute("class", "hidden");
+    
+                }
+            }
+        }
+    }, 1000);
 }
+
 
 // UI Logic
 // myPlayer = new Player("NameOne", 0);//For testing
 
 window.addEventListener("load", function () {
-    const holdbutton = document.getElementById("holdbutton");
-    const rollbutton = document.getElementById("rollbutton");
     document.getElementById("create-player").addEventListener("submit", createPlayer);
     document.getElementById("pig-dice").addEventListener("click", handleSubmission);
-    document.getElementById("computer-player").addEventListener("submit", computerPlayer);
-  
+    document.getElementById("computer-player").addEventListener("click", startWithComputer);
+
 })
 
 let playerOne; //Defining a player, setting to null
 let playerTwo;
-// playerOne.playerTurn = true;
+let computerOpponent;
 
-function computerPlayer(e) {
-    computerPlayer = new Player(Skynet);
+function startWithComputer(e) {
+    e.preventDefault();
+    computerOpponent = new Player("Skynet");
+    displayTurn();
+    if (computerOpponent.playerTurn) {
+
+    }
 }
 
 function createPlayer(e) {
@@ -130,7 +161,7 @@ function handleSubmission(e) {
 
             }
         }
-    } else if (playerTwo.playerTurn === true) {
+    } else if (playerTwo && playerTwo.playerTurn === true) {
         if (e.target === rollbutton) {
             playerTwo.diceRoll();
             console.log(playerTwo.name, " clicked roll. Your total score is: ", playerTwo.totalScore, "and your round score is: ", playerTwo.roundScore);
@@ -147,6 +178,8 @@ function handleSubmission(e) {
                 hideMe.setAttribute("class", "hidden");
             }
         }
+    } else if (computerOpponent && computerOpponent.playerTurn) {
+        computerStrategy();
     }
 }
 
@@ -154,8 +187,10 @@ function displayTurn() {
     const pTurn = document.getElementById("turn");
     if (playerOne.playerTurn) {
         pTurn.innerText = "It is " + playerOne.name + "'s turn.";
-    } else if (playerTwo.playerTurn) {
+    } else if (playerTwo && playerTwo.playerTurn) {
         pTurn.innerText = "It is " + playerTwo.name + "'s turn.";
+    } else if (computerOpponent && computerOpponent.playerTurn) {
+        pTurn.innerText = "It is " + computerOpponent.name + "'s turn";
     }
 }
 
@@ -163,6 +198,6 @@ Player.prototype.victoryCheck = function () {
     if (this.totalScore >= 100) {
         this.playerVictory = true;
     } else {
-        playerVictory = false;
+        this.playerVictory = false;
     }
 }
