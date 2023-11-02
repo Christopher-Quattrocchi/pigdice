@@ -50,7 +50,7 @@ function computerStrategy() {
     const interval = setInterval(() => {
         // Check if it's the computer's turn
         if (computerOpponent.playerTurn) {
-            if (computerOpponent.roundScore > 20 || !computerOpponent.playerTurn) {
+            if (computerOpponent.roundScore > 12 || !computerOpponent.playerTurn) {
                 clearInterval(interval);
                 if (computerOpponent.playerTurn) {
                     computerOpponent.updateScore();
