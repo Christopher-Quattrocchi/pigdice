@@ -63,7 +63,8 @@ function computerStrategy() {
         if (computerOpponent.roundScore > 12 || computerOpponent.totalScore >= 100) {
             clearInterval(interval);
             computerOpponent.updateScore();
-            if (computerOpponent.totalScore >= 100) {
+            computerOpponent.victoryCheck();
+            if (computerOpponent.playerVictory) {
                 victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
                 hideMe.setAttribute("class", "hidden");
             } else {
