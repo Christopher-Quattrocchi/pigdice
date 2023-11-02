@@ -11,7 +11,7 @@ function Player(name) {
 
 //get random number 1-6, add to roundscore if not 1
 Player.prototype.diceRoll = function () {
-    const displayRoll = document.getElementById("roll")
+    displayRoll = document.getElementById("roll")
     let roll = Math.floor(Math.random() * 6) + 1;
     if (roll === 1) {
         displayRoll.innerText = "You rolled a: " + roll;
@@ -24,7 +24,7 @@ Player.prototype.diceRoll = function () {
 }
 
 //add roundscore to total score
-Player.prototype.updateScore = function () {
+Player.prototype.updateScore = function (roundScore) {
     this.totalScore = this.totalScore + this.roundScore;
     this.roundScore = 0;
     changePlayer();
@@ -37,7 +37,7 @@ function changePlayer() {
     }
     if (computerOpponent) {
         computerOpponent.playerTurn = !computerOpponent.playerTurn;
-    }   computerStrategy();
+    }
     displayTurn();
 }
 
@@ -45,39 +45,37 @@ function computerStrategy() {
     const p2 = document.getElementById("p2");
     const pTotal2 = document.getElementById("total-score-p2");
     const pRound2 = document.getElementById("round-score-p2");
-    const victory = document.getElementById("victory");
-    const hideMe = document.getElementById("hideme");
     p2.innerText = "Player Two: " + computerOpponent.name;
 
     const interval = setInterval(() => {
+        // Check if it's the computer's turn
         if (computerOpponent.playerTurn) {
             if (computerOpponent.roundScore > 12 || !computerOpponent.playerTurn) {
                 clearInterval(interval);
                 if (computerOpponent.playerTurn) {
                     computerOpponent.updateScore();
-                    computerOpponent.victoryCheck();
-                    if (computerOpponent.playerVictory) {
-                        victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
-                        hideMe.setAttribute("class", "hidden");
-                    }
+                    pRound2.innerText = "Round Score: " + computerOpponent.roundScore;
+                    pTotal2.innerText = "Total Score: " + computerOpponent.totalScore;
+                    
                 }
             } else {
                 computerOpponent.diceRoll();
-                computerOpponent.victoryCheck();
+                pRound2.innerText = "Round Score: " + computerOpponent.roundScore;
+                pTotal2.innerText = "Total Score: " + computerOpponent.totalScore;
+                computerOpponent.victoryCheck()
                 if (computerOpponent.playerVictory) {
-                    clearInterval(interval);
                     victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
                     hideMe.setAttribute("class", "hidden");
+    
                 }
             }
-            pRound2.innerText = "Round Score: " + computerOpponent.roundScore;
-            pTotal2.innerText = "Total Score: " + computerOpponent.totalScore;
         }
     }, 1000);
 }
 
 
 // UI Logic
+// myPlayer = new Player("NameOne", 0);//For testing
 
 window.addEventListener("load", function () {
     document.getElementById("create-player").addEventListener("submit", createPlayer);
@@ -95,15 +93,15 @@ function startWithComputer(e) {
     document.getElementById("create-player").setAttribute("class", "hidden");
     document.getElementById("computer-player").setAttribute("class", "hidden");
     computerOpponent = new Player("Skynet");
-    const p2 = document.getElementById("p2");
     displayTurn();
-    p2.innerText = "Player Two: " + computerOpponent.name;
-    
+    if (computerOpponent.playerTurn) {
+
+    }
 }
 
 function createPlayer(e) {
     e.preventDefault();
-    const form = document.getElementById("pig-dice");
+    form = document.getElementById("pig-dice");
     const name = document.getElementById("name").value;
     const pTurn = document.getElementById("turn");
     const hideForm = document.getElementById("create-player");
@@ -121,9 +119,12 @@ function createPlayer(e) {
         p2.innerText = "Player two: " + name;
         hideForm.setAttribute("class", "hidden");
         document.getElementById("computer-player").setAttribute("class", "hidden");
+
     } else {
+
         console.log("Stop breaking stuff");
     }
+
     if (playerOne.playerTurn === true) {
         pTurn.innerText = "It is " + playerOne.name + "'s turn";
     } else if (playerTwo.playerTurn === true) {
@@ -142,6 +143,8 @@ function handleSubmission(e) {
     const pRound2 = document.getElementById("round-score-p2");
     const victory = document.getElementById("victory");
 
+
+
     if (playerOne.playerTurn === true) {
         if (e.target === rollbutton) {
             playerOne.diceRoll();
@@ -157,6 +160,7 @@ function handleSubmission(e) {
             if (playerOne.playerVictory) {
                 victory.innerText = playerOne.name + " Victory! Winner Winner Chicken Dinner!!";
                 hideMe.setAttribute("class", "hidden");
+
             }
         }
     } else if (playerTwo && playerTwo.playerTurn === true) {
