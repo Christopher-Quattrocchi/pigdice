@@ -60,7 +60,7 @@ function computerStrategy() {
         pRound2.innerText = "Round Score: " + computerOpponent.roundScore;
         pTotal2.innerText = "Total Score: " + computerOpponent.totalScore;
 
-        if (computerOpponent.roundScore > 12 || computerOpponent.totalScore >= 100) {
+        if (computerOpponent.roundScore > 12 || computerOpponent.totalScore >= 10) {
             clearInterval(interval);
             computerOpponent.updateScore();
             computerOpponent.victoryCheck();
@@ -191,7 +191,7 @@ function displayTurn() {
 }
 
 Player.prototype.victoryCheck = function () {
-    if (this.totalScore >= 100) {
+    if (this.totalScore >= 10) {
         this.playerVictory = true;
     } else {
         this.playerVictory = false;
