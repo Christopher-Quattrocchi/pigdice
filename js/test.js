@@ -17,29 +17,40 @@ Player.prototype.diceRoll = async function () {
     const pRound1 = document.getElementById("round-score-p1");
     const pTotal2 = document.getElementById("total-score-p2");
     const pRound2 = document.getElementById("round-score-p2");
+    const match = document.getElementById("match");
+    const wipeout = document.getElementById("wipeout");
 
     let roll1 = Math.floor(Math.random() * 6) + 1;
     let roll2 = Math.floor(Math.random() * 6) + 1;
 
+    displayRoll1.innerText = this.name + " rolled a: " + roll1;
+    displayRoll2.innerText = this.name + " rolled a: " + roll2;
+
     if (roll1 === 1 && roll2 === 1) {
         this.roundScore = 0;
         this.totalScore = 0;
-
-        displayRoll1.innerText = "You rolled a: " + roll1;
-        displayRoll2.innerText = "You rolled a: " + roll2;
-        updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+        wipeout.innerText = this.name + " got wiped out! Total set to 0";
         await delay(1000);
+        updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+        wipeout.innerText = "";
         changePlayer();
     } else if (roll1 === 1 || roll2 === 1) {
-        displayRoll1.innerText = "You rolled a: " + roll1;
-        displayRoll2.innerText = "You rolled a: " + roll2;
         this.roundScore = 0;
+        wipeout.innerText = this.name + " rolled a one. Bad luck!"
         updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
         await delay(1000);
+        wipeout.innerText = "";
         changePlayer();
+    } else if (roll1 === roll2) {
+        this.roundScore = roll1 + roll2;
+        console.log("same number, should autoroll again");
+        match.innerText = "MATCH. Auto-roll";
+        updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+        await delay(1000);
+        this.diceRoll()
+        match.innerText = "";
+        await delay(1000);
     } else {
-        displayRoll1.innerText = "You rolled a: " + roll1;
-        displayRoll2.innerText = "You rolled a: " + roll2;
         this.roundScore += roll1 + roll2;
         updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
     }
@@ -80,16 +91,6 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// async function xyz() {
-//     //... (initialization code)
-
-//     while (computerOpponent.playerTurn) {
-//         //... (game logic)
-//         await delay(1000);
-//     }
-// }
-
-
 async function computerStrategy() {
     if (!computerOpponent.playerTurn) return;
     console.log("In computerStrategy");
@@ -100,14 +101,14 @@ async function computerStrategy() {
     const victory = document.getElementById("victory");
     const hideMe = document.getElementById("hideme");
 
-    while (computerOpponent.playerTurn && computerOpponent.totalScore < 100 && computerOpponent.roundScore < 22) {
+    while (computerOpponent.playerTurn && computerOpponent.totalScore < 100 && computerOpponent.roundScore < 20) {
         console.log("In while loop");
         await computerOpponent.diceRoll();
         updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
         await delay(1000);
         console.log("after first delay");
     }
-    if (computerOpponent.roundScore >= 22) {
+    if (computerOpponent.roundScore >= 20) {
         console.log("inside conditional that checks for comp score equal or over 22");
         computerOpponent.updateScore();
         updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
@@ -126,44 +127,11 @@ async function computerStrategy() {
     console.log("end of computerStrategy");
 }
 
-// function computerStrategy() {
-//     if (!computerOpponent.playerTurn) return;
-
-//     const pTotal2 = document.getElementById("total-score-p2");
-//     const pRound2 = document.getElementById("round-score-p2");
-//     const victory = document.getElementById("victory");
-//     const hideMe = document.getElementById("hideme");
-
-//     const interval = setInterval(() => {
-//         if (!computerOpponent.playerTurn || computerOpponent.roundScore > 22) {
-//             // computerOpponent.updateScore();
-//             updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
-//             clearInterval(interval);
-//             if (computerOpponent.roundScore > 22 || computerOpponent.totalScore >= 100) {
-//                 computerOpponent.updateScore();
-//                 updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
-//                 computerOpponent.victoryCheck();
-//                 if (computerOpponent.playerVictory) {
-//                     victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
-//                     hideMe.setAttribute("class", "hidden");
-//                 } else {
-//                     changePlayer();
-//                 }
-//             }
-//             return;
-//         }
-//         computerOpponent.diceRoll();
-//         updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
-//     }, 1000);
-// }
-
 // UI Logic
-
 window.addEventListener("load", function () {
     document.getElementById("create-player").addEventListener("submit", createPlayer);
     document.getElementById("pig-dice").addEventListener("click", handleSubmission);
     document.getElementById("computer-player").addEventListener("click", startWithComputer);
-
 })
 
 let playerOne; //Defining a player, setting to null
@@ -172,9 +140,11 @@ let computerOpponent;
 
 function startWithComputer(e) {
     e.preventDefault();
+    const form = document.getElementById("pig-dice");
     document.getElementById("create-player").setAttribute("class", "hidden");
     document.getElementById("computer-player").setAttribute("class", "hidden");
     computerOpponent = new Player("Skynet");
+    form.setAttribute("class", "not-hidden");
     const p2 = document.getElementById("p2");
     displayTurn();
     p2.innerText = "Player Two: " + computerOpponent.name;
@@ -188,7 +158,6 @@ function createPlayer(e) {
     const hideForm = document.getElementById("create-player");
     const p1 = document.getElementById("p1");
     const p2 = document.getElementById("p2");
-    form.setAttribute("class", "not-hidden");
     if (!playerOne) {
         playerOne = new Player(name);
         playerOne.playerTurn = true;
@@ -199,6 +168,7 @@ function createPlayer(e) {
         playerTwo = new Player(name);
         p2.innerText = "Player two: " + playerTwo.name;
         hideForm.setAttribute("class", "hidden");
+        form.setAttribute("class", "not-hidden");
         document.getElementById("computer-player").setAttribute("class", "hidden");
     } else {
         console.log("Stop breaking stuff");

@@ -244,3 +244,43 @@ Player.prototype.victoryCheck = function () {
     }
 }
 
+//Reference
+// Here's a quick example where I extracted the updating of the "You rolled a" HTML to use this kind of model:
+
+const rollObservers = [];
+
+rollObservers.push(function(roll1, roll2) {
+    displayRoll1.innerText = "You rolled a: " + roll1;
+    displayRoll2.innerText = "You rolled a: " + roll2;
+});
+
+function getDiceRoll() {
+    return Math.floor(Math.random() * 6) + 1;
+}
+
+//get random number 1-6, add to roundscore if not 1
+Player.prototype.diceRoll = async function () {
+    const roll1 = getDiceRoll();
+    const roll2 = getDiceRoll();
+
+    rollObservers.forEach(function(observer) {
+        observer(roll1, roll2);
+    });
+
+    if (roll1 === 1 && roll2 === 1) {
+        this.roundScore = 0;
+        this.totalScore = 0;
+        updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+        await delay(1000);
+        changePlayer();
+    } else if (roll1 === 1 || roll2 === 1) {
+        this.roundScore = 0;
+        updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+        await delay(1000);
+        changePlayer();
+    } else {
+        this.roundScore += roll1 + roll2;
+        updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+    }
+}
+
