@@ -17,8 +17,9 @@ Player.prototype.diceRoll = async function () {
     const pRound1 = document.getElementById("round-score-p1");
     const pTotal2 = document.getElementById("total-score-p2");
     const pRound2 = document.getElementById("round-score-p2");
-    const match = document.getElementById("match");
-    const wipeout = document.getElementById("wipeout");
+    // const match = document.getElementById("match");
+    // const wipeout = document.getElementById("wipeout");
+    const info = document.getElementById("info");
 
     let roll1 = Math.floor(Math.random() * 6) + 1;
     let roll2 = Math.floor(Math.random() * 6) + 1;
@@ -26,34 +27,46 @@ Player.prototype.diceRoll = async function () {
     displayRoll1.innerText = this.name + " rolled a: " + roll1;
     displayRoll2.innerText = this.name + " rolled a: " + roll2;
 
+    showDice(roll1, roll2);
+
     if (roll1 === 1 && roll2 === 1) {//check for total wipeout
         this.roundScore = 0;
         this.totalScore = 0;
-        wipeout.innerText = this.name + " got wiped out! Total set to 0";
+        info.innerText = this.name + " got wiped out! Total set to 0";
         await delay(1000);
         updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
-        wipeout.innerText = "";
+        info.innerText = "";
         changePlayer();
     } else if (roll1 === 1 || roll2 === 1) {//check for round wipeout
         this.roundScore = 0;
-        wipeout.innerText = this.name + " rolled a one. Bad luck!"
+        info.innerText = this.name + " rolled a one. Bad luck!"
         updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
         await delay(1000);
-        wipeout.innerText = "";
+        info.innerText = "";
         changePlayer();
     } else if (roll1 === roll2) {//check for mandatory additional roll
         this.roundScore = roll1 + roll2;
         console.log("same number, should autoroll again");
-        match.innerText = "MATCH. Auto-roll";
+        info.innerText = "MATCH. Auto-roll";
         updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
         await delay(1000);
         this.diceRoll()
-        match.innerText = "";
+        info.innerText = "";
         await delay(1000);
     } else {//no special conditions
         this.roundScore += roll1 + roll2;
         updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
     }
+}
+
+function showDice(roll1, roll2) {
+    imgHolder = document.getElementById("img-holder");
+    img1 = document.getElementById("img1");
+    img2 = document.getElementById("img2");
+
+    imgHolder.setAttribute("class", "hideme");
+    img1.setAttribute("src", "dice/" + roll1 + ".png");
+    img2.setAttribute("src", "dice/" + roll2 + ".png");
 }
 
 function updateDisplay(player, pTotal1, pRound1, pTotal2, pRound2) {//make sure that the current score is shown
@@ -143,7 +156,9 @@ let computerOpponent;
 
 function startWithComputer(e) {//this starts the game if you select computer
     e.preventDefault();
+    const hideInstructions = document.getElementById("hideonplay");
     const form = document.getElementById("pig-dice");
+    hideInstructions.setAttribute("class", "hidden");
     document.getElementById("create-player").setAttribute("class", "hidden");//hides stuff so the player doesn't screw with it
     document.getElementById("computer-player").setAttribute("class", "hidden");
     computerOpponent = new Player("Skynet");
@@ -161,6 +176,7 @@ function createPlayer(e) {
     const hideForm = document.getElementById("create-player");
     const p1 = document.getElementById("p1");
     const p2 = document.getElementById("p2");
+    const hideInstructions = document.getElementById("hideonplay");
     if (!playerOne) {//create player one
         playerOne = new Player(name);
         playerOne.playerTurn = true;
@@ -170,6 +186,7 @@ function createPlayer(e) {
     } else if (!playerTwo) {//create player two
         playerTwo = new Player(name);
         p2.innerText = "Player two: " + playerTwo.name;
+        hideInstructions.setAttribute("class", "hidden");
         hideForm.setAttribute("class", "hidden");
         form.setAttribute("class", "not-hidden");
         document.getElementById("computer-player").setAttribute("class", "hidden");
@@ -246,4 +263,3 @@ Player.prototype.victoryCheck = function () {//check for victory
         this.playerVictory = false;
     }
 }
-
