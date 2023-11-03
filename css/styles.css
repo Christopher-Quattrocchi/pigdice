@@ -19,6 +19,11 @@ p {
     text-align: center;
 }
 
+#main-img {
+    border-radius: 10px;
+    border: solid 2px hotpink;
+}
+
 #create-player {
     text-align: center;
 }
@@ -33,11 +38,29 @@ h1 {
     text-align: center;
 }
 
+#pig-dice {
+    text-align: center;
+}
+
 body {
     background-color: pink;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+
+}
+
+#info {
+    text-align: center;
+}
+
+#scores {
+    display: flex;
+    
+}
+
+#output-p1 {
+    width: 45%;
+}
+#output-p2 {
+    width: 45%;
 }
 
 @keyframes rollDice {
@@ -51,17 +74,17 @@ body {
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     margin: 30px;
-    height: 5%;
-    width: 5%;
+    height: 15%;
+    width: 15%;
     /* float: right; */
 }
 
-#floatmeleft {
-    /* float: left; */
-}
 
-.container {
+#container {
     display: flex;
     flex-direction: row;
+    align-items:center;
+    justify-content:center;
    
 }
+

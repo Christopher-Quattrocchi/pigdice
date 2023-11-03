@@ -5,30 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css" type="text/css">
-    <script src="js/test.js"></script>
+    <script src="js/scripts.js"></script>
     <title>Pig Dice</title>
 </head>
 
 <body>
-    <h1>PIG'S DICE</h1>
-    <p>Roll the dice. First player to 100 wins all the bacon!</p>
-    <p>Roll a ONE and your round score goes to ZERO. Roll a double ONE and your TOTAL score goes to ZERO. Get a match,
-        and you must roll again. Good Luck!</p>
-    <p>May to roll's be ever in your favor.</p>
-    <div id="main-img-container">
-       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Pass_the_pigs_dice.jpg/250px-Pass_the_pigs_dice.jpg"
-        alt="pig's dice" id="main-img"> 
+    <div id="hideonplay">
+        <h1>PIG'S DICE</h1>
+        <p>Roll the dice. First player to 100 wins all the bacon!</p>
+        <p>Roll a ONE and your round score goes to ZERO. Roll a double ONE and your TOTAL score goes to ZERO. Get a
+            match,
+            and you must roll again. Good Luck!</p>
+        <p>May to roll's be ever in your favor.</p>
     </div>
-    
+
+    <div id="main-img-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Pass_the_pigs_dice.jpg/250px-Pass_the_pigs_dice.jpg"
+            alt="pig's dice" id="main-img">
+    </div>
+
 
     <div id="hideme">
         <form id="create-player">
             <p>Enter your name:</p>
             <input type="text" name="name" id="name">
             <button type="submit" id="create-button">Create Player</button>
+            <button type="click" class="hidden" id="computer-player">Play against computer</button>
         </form>
 
-        <button type="click" class="hidden" id="computer-player">Play against computer</button>
+
 
 
         <form id="pig-dice" class="hidden">
@@ -44,26 +49,28 @@
                 <img id="img1" src="" alt="die1" class="img-dice">
                 <img id="img2" src="" alt="die2" class="img-dice">
             </div>
-            <div id="floatmeleft">
+
+            <div id="iholdrolls">
                 <h2 id="roll1"></h2>
                 <h2 id="roll2"></h2>
             </div>
         </div>
+        <h2 id="info"></h2>
+        <div id="scores">
+            <div id="output-p1" class="player">
+                <p>Player One:</p>
+                <p id="round-score-p1"></p>
+                <p id="total-score-p1"></p>
+                <p id="victory-p1"></p>
+            </div>
+            <div id="output-p2" class="player">
+                <p>Player Two:</p>
+                <p id="round-score-p2"></p>
+                <p id="total-score-p2"></p>
+                <p id="victory-p2"></p>
+            </div>
+        </div>
 
-        <h2 id="match"></h2>
-        <h2 id="wipeout"></h2>
-        <div id="output-p1" class="player">
-            <p>Player One:</p>
-            <p id="round-score-p1"></p>
-            <p id="total-score-p1"></p>
-            <p id="victory-p1"></p>
-        </div>
-        <div id="output-p2" class="player">
-            <p>Player Two:</p>
-            <p id="round-score-p2"></p>
-            <p id="total-score-p2"></p>
-            <p id="victory-p2"></p>
-        </div>
     </div>
 
     <h1 id="victory"></h1>
