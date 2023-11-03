@@ -32,3 +32,7 @@ Expected Output:
 Test 8: 
 Code:
 Expected Output:
+
+[gh-pages link]([
+](https://christopher-quattrocchi.github.io/pigdice/)
+https://christopher-quattrocchi.github.io/pigdice/)
